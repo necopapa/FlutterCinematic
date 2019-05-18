@@ -5,6 +5,7 @@ import 'package:movies_flutter/util/api_client.dart';
 import 'package:movies_flutter/util/utils.dart';
 import 'package:movies_flutter/widgets/search/search_item.dart';
 import 'package:rxdart/rxdart.dart';
+// import 'dart:async'
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -38,7 +39,7 @@ class _SearchPageState extends State<SearchScreen> {
 
     querySubject.stream
         .where((query) => query.isNotEmpty)
-        .debounce(Duration(milliseconds: 250))
+        .debounce((_) => TimerStream(true, const Duration(milliseconds: 250)))
         .distinct()
         .switchMap((query) =>
             Observable.fromFuture(_apiClient.getSearchResults(query)))
